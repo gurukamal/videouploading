@@ -2,7 +2,7 @@
 
 ## Description
 
-This project is a web application that allows users to upload videos, extract subtitles, and search for phrases within the subtitles. The backend is built using Django and the frontend is built using React.js. Video files are uploaded to AWS S3, and subtitles are extracted using CCExtractor. The app allows users to search for phrases in the subtitles and navigate to specific timestamps in the video.
+This project is a web application that allows users to upload videos, extract subtitles, and search for phrases within the subtitles. The backend is built using Django and the frontend is built using HTML CSS only. Video files are uploaded using threading for background processes and also i use celery for the same, and subtitles are extracted using CCExtractor and ffmpeg used to video format. The app allows users to search for phrases in the subtitles and navigate to specific timestamps in the video.
 
 ### Features:
 - **Video Upload**: Users can upload video files to the application, which are stored on AWS S3.
@@ -14,7 +14,6 @@ This project is a web application that allows users to upload videos, extract su
 
 ### Backend:
 - **Django**: Python framework used to handle the backend logic and API.
-- **Django REST Framework**: Provides RESTful API endpoints for interacting with the video and subtitle data.
 - **PostgreSQL**: Relational database for storing video metadata and subtitles.
 - **CCExtractor**: External tool used for extracting subtitles from video files.
 
@@ -28,7 +27,7 @@ This project is a web application that allows users to upload videos, extract su
 
 ## Features
 
-- **Video Upload and Storage**: Upload videos from the frontend using React.js, which are stored on AWS S3.
+- **Video Upload and Storage**: Upload videos from the frontend.
 - **Subtitle Extraction**: Automatically extract subtitles from uploaded videos using CCExtractor and save them in the PostgreSQL database.
 - **Search Subtitles**: Search for specific phrases in subtitles, and click the timestamp to jump to that point in the video.
 - **Docker Support**: The entire application can be run using Docker for ease of development and deployment.
@@ -46,8 +45,7 @@ Before running the project, ensure you have the following installed:
 ### 1. Clone the repository:
 
 ```bash
-git clone https://github.com/your-username/video-upload-processing-app.git
-cd video-upload-processing-app
+git clone https://github.com/gurukamal/videouploading.git
 ```
 
 # Backend Setup (Django)
@@ -61,7 +59,7 @@ pip install -r requirements.txt
 ### 2. Run Migrations:
 
 ```bash
-python manag.py makemigrations
+python manage.py makemigrations
 python manage.py migrate
 ```
 
