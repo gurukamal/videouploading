@@ -81,7 +81,7 @@ http://localhost:8000
 
 # Usage
 
-#### 1. Upload Video: Go to the React frontend, upload a video file along with a title. The video is uploaded to AWS S3 and subtitles are extracted.
+#### 1. Upload Video: Go to the frontend, upload a video file along with a title. The video is uploaded and save in media and subtitles are extracted.
 #### 2. View Videos: View the list of uploaded videos.
 #### 3. Search Subtitles: Search for a phrase in the subtitles and click on the timestamp to jump to that part of the video.
 
