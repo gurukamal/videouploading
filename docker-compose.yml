@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  db:
+    image: postgres
+    environment:
+      POSTGRES_DB: videoprocessing_db
+      POSTGRES_USER: your_user
+      POSTGRES_PASSWORD: your_password
+    ports:
+      - "5432:5432"
+
+  backend:
+    build: ./videouploading
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./videouploading:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db

@@ -1,0 +1,50 @@
+<!-- video_detail.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ video.title }}</title>
+    <script>
+        function goToTime(videoId, timestamp) {
+            const videoElement = document.getElementById(videoId);
+            const timeParts = timestamp.split(':');
+            const seconds = (+timeParts[0]) * 3600 + (+timeParts[1]) * 60 + (+timeParts[2]);
+            videoElement.currentTime = seconds;
+            videoElement.play();
+        }
+    </script>
+</head>
+<body>
+    <h1>{{ video.title }}</h1>
+    
+    <video id="video-player" width="600" controls>
+        <source src="{{ video.video.url }}" type="video/mp4">
+        {% if video.subtitle_file %}
+        <track src="{{ video.subtitle_file.url }}" kind="subtitles" srclang="{{ video.language }}" label="{{ video.language }}">
+        {% endif %}
+        Your browser does not support the video tag.
+    </video>
+
+    <h3>Search Subtitles:</h3>
+    <form action="{% url 'search' video.id %}" method="get">
+        <input type="text" name="q" placeholder="Search subtitles...">
+        <button type="submit">Search</button>
+    </form>
+
+    {% if results %}
+    <h3>Matches:</h3>
+    <ul>
+        {% for timestamp, subtitle in results %}
+        <li>
+            <a href="javascript:void(0);" onclick="goToTime('video-player', '{{ timestamp|slice:'0:8' }}');">
+                {{ timestamp }} - {{ subtitle }}
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+    {% elif query %}
+    <p>No results found for "{{ query }}".</p>
+    {% endif %}
+</body>
+</html>

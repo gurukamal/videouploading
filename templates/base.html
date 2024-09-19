@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+<style>
+    body {
+        background-color: #f8f9fa;
+    }
+    
+    h1, h2, h3 {
+        text-align: center;
+    }
+    
+    .container {
+        margin-top: 50px;
+    }
+    
+    .video-container {
+        text-align: center;
+    }
+    
+    ul {
+        list-style-type: none;
+        padding: 0;
+    }
+    
+    ul li {
+        margin-bottom: 10px;
+    }
+</style>
+<title>Search Results</title>
+    <script>
+        function goToTime(videoId, timestamp) {
+            const videoElement = document.getElementById(videoId);
+            const timeParts = timestamp.split(':');
+            const seconds = (+timeParts[0]) * 3600 + (+timeParts[1]) * 60 + (+timeParts[2]);
+            videoElement.currentTime = seconds;
+            videoElement.play();
+        }
+    </script>
+</head>
+<body>
+    {% comment %} <nav class="navbar navbar-dark bg-dark">
+        <span class="navbar-brand mb-0 h1"><center>Video Uploading</center></span>
+        </nav> {% endcomment %}
+        <h1>Upload Your Videos Here!</h1>
+    <div class="container">
+        <div class="mt-5">
+            <form action="" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button class="btn btn-success btn-lg">Upload</button>
+            </form>
+        </div>
+
+        <hr>
+
+        <!-- List of all uploaded videos -->
+        <h2 class="mt-5">Uploaded Videos</h2>
+        <ul>
+            {% for video in videos %}
+            <li>
+                <h3>{{ video.title }}</h3>
+                <video width="600" class="embed-responsive embed-responsive-16by9" controls="controls">
+                    <source src="{{ video.video.url }}" type="video/mp4">
+                </video>
+                <a href="{% url 'video_detail' video.id %}">View Details</a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+        
+        {% comment %} <hr>
+        {% for x in all %}
+        <h3 class="text-center mt-2 mb-2">{{x.title}}</h3>
+        <video width="600" class="embed-responsive embed-responsive-16by9" controls="controls" >
+        <source src="{{x.video.url}}" type="video/mp4" />
+        {% if video.subtitle_file %}
+                <track src="{{ video.subtitle_file.url }}" kind="subtitles" srclang="{{ video.language }}" label="{{ video.language }}">
+        {% endif %}
+
+        </video>
+        {% endfor %}
+        
+        </div> {% endcomment %}
+        
+        
+
+        {% comment %} <h1>Search Results for "{{ query }}"</h1>
+        <h2>{{ video.title }}</h2>
+        <video id="video-player" width="600" controls>
+            <source src="{{ video.video.url }}" type="video/mp4">
+            {% if video.subtitle_file %}
+            <track src="{{ video.subtitle_file.url }}" kind="subtitles" srclang="{{ video.language }}" label="{{ video.language }}">
+            {% endif %}
+            Your browser does not support the video tag.
+        </video> {% endcomment %}
+
+        {% comment %} <h3>Matches:</h3>
+        <ul>
+            {% for timestamp, subtitle in results %}
+            <li>
+                <a href="javascript:void(0);" onclick="goToTime('video-player', '{{ timestamp|slice:'0:8' }}');">
+                    {{ timestamp }} - {{ subtitle }}
+                </a>
+            </li>
+            {% empty %}
+            <li>No results found for "{{ query }}".</li>
+            {% endfor %}
+        </ul> {% endcomment %}
+    </body>
+    </html>
